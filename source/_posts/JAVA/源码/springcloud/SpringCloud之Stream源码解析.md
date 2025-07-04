@@ -91,9 +91,6 @@ server:
     <version>2023.0.0.0-RC1</version>
 </dependency>
 ```
-
-
-
 #### 代码
 
 生产者
@@ -112,15 +109,13 @@ public class RocketmqApplication {
      */
     protected void after() {
         Message<String> message = new GenericMessage<>("hello world");
-        //跟配置文件中的生产者名称需要对应上
+        //跟配置文件中的生产者名称需要对应上，需要用哪一个生产者来发送消息
         this.streamBridge.send("producer-out-0", message);
     }
 }
 ```
 
-消费者
-
-消费者的名称需要跟配置文件中的 **spring.cloud.stream.function.definition** 对应上
+消费者的bean名称需要跟配置文件中的 **spring.cloud.stream.function.definition** 对应上
 
 ```java
 @Configuration
@@ -143,120 +138,121 @@ public class AtomConsumerConfiguration {
 
 ## 三、源码
 
+![[images/构建流程.svg]]
+
 ### 1. 自动装配
 
 **spring cloud stream** 作为顶级依赖,定义了基础接口类供后续各种中间件的实现以及无缝衔接,在通过自动装配类来跟 **spring boot** 进行自动绑定生产者和消费者,**spring cloud stream** 定义的比较核心的自动装配类如下
 
-- BindingServiceProperties:消息生产者和消费者的配置类
-- BindingServiceConfiguration:绑定服务自动装配(核心)
-- BinderFactoryAutoConfiguration:绑定器需要的一些工厂类自动装配类
-- FunctionConfiguration:函数映射的自动装配
-
-
-
-#### 1.1 BinderFactoryAutoConfiguration
-
-- messageHandlerMethodFactory: 消息处理的工厂方法,用于创建方法的执行器,默认使用DefaultMessageHandlerMethodFactory
-- binderTypeRegistry: META-INF/spring.binders 中指定的类型注册工厂例如: 默认使用DefaultBinderTypeRegistry
-  - rocketmq: com.alibaba.cloud.stream.binder.rocketmq.autoconfigurate.RocketMQBinderAutoConfiguration
-  - kafka: org.springframework.cloud.stream.binder.kafka.config.KafkaBinderConfiguration
-- streamFunctionProperties:映射spring.cloud.stream.function.bindings 配置,默认使用StreamFunctionProperties
-- messageConverterConfigurer:消息转换器的配置类,默认 MessageConverterConfigurer,需要读取spring容器中的 CompositeMessageConverter的bean
-- compositeMessageChannelConfigurer:聚合管道的配置类,将StreamFunctionProperties配置的信息进行绑定管道
-
-![image-20240304150142738](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20240304150142738.png)
-
-
-
-#### 1.2 BindingServiceConfiguration
-
-- BindingHandlerAdvise:配置的增强器,用于指定一些默认的配置交给子类来实现
-- binderFactory: 绑定器的工厂方法,用于根据配置创建中间件的绑定器,默认使用 DefaultBinderFactory
-- getBinderConfigurations:用于对配置 spring.cloud.stream.binders 指定的配置转换为 BinderConfiguration 类型
-- binderChildContextInitializer:创建了一个绑定器工厂的初始化器,用于调用 ApplicationContextInitializer 类型
-- bindingService:绑定服务也是核心,通过Binder创建Binding
-- outputBindingLifecycle:创建生产者的绑定器,默认OutputBindingLifecycle
-- inputBindingLifecycle:创建消费者的绑定器,默认为InputBindingLifecycle
-- bindingsLifecycleController:消费者和生产者生命周期的控制器
+- BindingServiceProperties：消息生产者和消费者的配置类
+- BindingServiceConfiguration：绑定服务自动装配(核心)
+	- BindingHandlerAdvise：配置的增强器,用于指定一些默认的配置交给子类来实现
+	- binderFactory: 绑定器的工厂方法,用于根据配置创建中间件的绑定器,默认使用 DefaultBinderFactory
+	- getBinderConfigurations：用于对配置 spring.cloud.stream.binders 指定的配置转换为 BinderConfiguration 类型
+	- binderChildContextInitializer：创建了一个绑定器工厂的初始化器,用于调用 ApplicationContextInitializer 类型
+	- bindingService：绑定服务也是核心,通过Binder创建Binding
+	- outputBindingLifecycle：创建生产者的绑定器,默认OutputBindingLifecycle
+	- inputBindingLifecycle：创建消费者的绑定器,默认为InputBindingLifecycle
+	- bindingsLifecycleController：消费者和生产者生命周期的控制器
 
 ![image-20240223094047174](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20240223094047174.png)
 
-#### 1.3 FunctionConfiguration
+- BinderFactoryAutoConfiguration：绑定器需要的一些工厂类自动装配类
+	- messageHandlerMethodFactory: 消息处理的工厂方法,用于创建方法的执行器,默认使用DefaultMessageHandlerMethodFactory
+	- binderTypeRegistry: META-INF/spring.binders 中指定的类型注册工厂例如: 默认使用DefaultBinderTypeRegistry
+	- rocketmq: com.alibaba.cloud.stream.binder.rocketmq.autoconfigurate.RocketMQBinderAutoConfiguration
+	- kafka: org.springframework.cloud.stream.binder.kafka.config.KafkaBinderConfiguration
+	- streamFunctionProperties：映射spring.cloud.stream.function.bindings 配置,默认使用StreamFunctionProperties
+	- messageConverterConfigurer：消息转换器的配置类,默认 MessageConverterConfigurer,需要读取spring容器中的CompositeMessageConverter的bean
+	- compositeMessageChannelConfigurer：聚合管道的配置类,将StreamFunctionProperties配置的信息进行绑定管道
 
-- functionBindingRegistrar:继承了 **InitializingBean** 启动时扫描出所有的函数接口创建代理工厂进行关联消费者和生产者,默认使用的是 FunctionBindingRegistrar
+![image-20240304150142738|0x0](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20240304150142738.png)
+
+- FunctionConfiguration：函数映射的自动装配，通过配置文件和代码中定义的函数式接口进行绑定
+	- functionBindingRegistrar：继承了 **InitializingBean** 启动时扫描出所有的函数接口创建代理工厂进行关联消费者和生产者,默认使用的是 FunctionBindingRegistrar
+
 
 ![image-20240304162437979](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20240304162437979.png)
 
-##### FunctionBindingRegistrar
+#### FunctionBindingRegistrar
 
-解析的是 **spring.cloud.stream.function.bindgins** 配置的消费者和生产的对应函数名称
+解析的是 **spring.cloud.stream.function.bindgins** 配置的消费者和生产的对应函数名称，会将配置文件中定义好的函数接口分别创建一个 **BindableFunctionProxyFactory** 提供给 **InputBindingLifecycle与InputBindingLifecycle** 进行创建对应的消费者和生产者
 
 ```java
 private static class FunctionBindingRegistrar implements InitializingBean, ApplicationContextAware, EnvironmentAware {
   
-  @Override
-		public void afterPropertiesSet() throws Exception {
-			this.determineFunctionName(functionCatalog, environment);
-			if (StringUtils.hasText(streamFunctionProperties.getDefinition())) {
-				//通过配置的函数名称从spring容器中获取到对应的bean名称
-				String[] functionDefinitions = this.filterEligibleFunctionDefinitions();
-				//便利函数名称
-				for (String functionDefinition : functionDefinitions) {
-					//根据定义的名称获取到对应的函数包装类
-					FunctionInvocationWrapper function = functionCatalog.lookup(functionDefinition);
-					if (function != null) {
-						//根据函数的类型来判断是消费者还是生产者，如果是Supplier类型那么就是生产者，如果是Consumer、RoutingFunction函数就是消费者
-						if (function.isSupplier()) {
-							this.inputCount = 0;
-							this.outputCount = this.getOutputCount(function, true);
-						}
-						else if (function.isConsumer() || function.isRoutingFunction()) {
-							this.inputCount = FunctionTypeUtils.getInputCount(function);
-							this.outputCount = 0;
-						}
-						else {
-							this.inputCount = FunctionTypeUtils.getInputCount(function);
-							if (function.isWrappedBiConsumer()) {
-								this.outputCount = 0;
-							}
-							else {
-								this.outputCount = this.getOutputCount(function, false);
-							}
-						}
-						AtomicReference<BindableFunctionProxyFactory> proxyFactory = new AtomicReference<>();
-						//创建默认的函数代理工厂 BindableFunctionProxyFactory
-						if (function.isInputTypePublisher()) {
-							//如果是 Mono或者Flux等响应式的话 需要设置支持的特性配置
-							final SupportedBindableFeatures supportedBindableFeatures = new SupportedBindableFeatures();
-							supportedBindableFeatures.setPollable(false);
-							supportedBindableFeatures.setReactive(true);
-
-							proxyFactory.set(new BindableFunctionProxyFactory(functionDefinition,
-								this.inputCount, this.outputCount, this.streamFunctionProperties, supportedBindableFeatures));
-						}
-						else {
-							proxyFactory.set(new BindableFunctionProxyFactory(functionDefinition,
-								this.inputCount, this.outputCount, this.streamFunctionProperties));
-						}
-						//注入到bean工厂
-						((GenericApplicationContext) this.applicationContext).registerBean(functionDefinition + "_binding",
-							BindableFunctionProxyFactory.class, () -> proxyFactory.get());
-					}
-					else {
-						logger.warn("The function definition '" + streamFunctionProperties.getDefinition() +
-								"' is not valid. The referenced function bean or one of its components does not exist");
-					}
-				}
-			}
-			//根据 spring.cloud.stream 配置中配置的 inputBindings，outputBindings创建对应的 BindableFunctionProxyFactory 代理绑定工厂
-			this.createStandAloneBindingsIfNecessary(applicationContext.getBean(BindingServiceProperties.class));
-
-		}
-  
+	@Override  
+	public void afterPropertiesSet() throws Exception {  
+	    /**  
+	     *     * 如果 spring.cloud.function.definition配置属性定义了数据，那么优先使用spring.cloud.function.definition配置  
+	     * 如果没有配置definition属性并且开启了 spring.cloud.stream.function.autodetect 自动探测函数则通过函数工厂获取到所有的函数名称  
+	     */  
+	    this.determineFunctionName(this.functionCatalog, this.environment);  
+	    //处理spring中定义的函数接口bean对象  
+	    if (StringUtils.hasText(this.streamFunctionProperties.getDefinition())) {  
+	       /**  
+	        * 通过配置的函数名称从spring容器中获取到对应的bean名称，将配置的definition属性中的函数进行处理  
+	        * 处理字符串中使用 ,或者;或者｜进行分割函数名称  
+	        */  
+	       String[] functionDefinitions = this.filterEligibleFunctionDefinitions();  
+	       for (String functionDefinition : functionDefinitions) {  
+	          //根据定义的名称获取到对应的函数包装类，这是去spring中通过名称进行获取函数接口  
+	          FunctionInvocationWrapper function = this.functionCatalog.lookup(functionDefinition);  
+	          if (function != null) {  
+	             //根据函数的类型来判断是消费者还是生产者，如果是Supplier类型那么就是生产者，如果是Consumer、RoutingFunction函数就是消费者  
+	             if (function.isSupplier()) {  
+	                this.inputCount = 0;  
+	                //方法输出的返回值个数  
+	                this.outputCount = this.getOutputCount(function, true);  
+	             }  
+	             // 判断函数是否是Consumer或者是RoutingFunction类型  
+	             else if (function.isConsumer() || function.isRoutingFunction()) {  
+	                // 计算函数的输入参数个数  
+	                this.inputCount = FunctionTypeUtils.getInputCount(function);  
+	                this.outputCount = 0;  
+	             }  
+	             else {  
+	                this.inputCount = FunctionTypeUtils.getInputCount(function);  
+	                // 是否是BiConsumer类型  
+	                if (function.isWrappedBiConsumer()) {  
+	                   this.outputCount = 0;  
+	                }  
+	                else {  
+	                   this.outputCount = this.getOutputCount(function, false);  
+	                }  
+	             }  
+	             AtomicReference<BindableFunctionProxyFactory> proxyFactory = new AtomicReference<>();  
+	             //创建默认的函数代理工厂 BindableFunctionProxyFactory             if (function.isInputTypePublisher()) {  
+	                //如果是 Mono或者Flux等响应式的话 需要设置支持的特性配置  
+	                final SupportedBindableFeatures supportedBindableFeatures = new SupportedBindableFeatures();  
+	                supportedBindableFeatures.setPollable(false);  
+	                supportedBindableFeatures.setReactive(true);  
+	                proxyFactory.set(new BindableFunctionProxyFactory(functionDefinition,  
+	                   this.inputCount, this.outputCount, this.streamFunctionProperties, supportedBindableFeatures));  
+	             }  
+	             else {  
+	                proxyFactory.set(new BindableFunctionProxyFactory(functionDefinition,  
+	                   this.inputCount, this.outputCount, this.streamFunctionProperties));  
+	             }  
+	             //将BindableFunctionProxyFactory注入到spring容器中，InputBindingLifecycle和OutputBindingLifecycle中会去获取对应的BindableFunctionProxyFactory  
+	             ((GenericApplicationContext) this.applicationContext).registerBean(functionDefinition + "_binding",  
+	                BindableFunctionProxyFactory.class, () -> proxyFactory.get());  
+	          }  
+	          else {  
+	             this.logger.warn("The function definition '" + this.streamFunctionProperties.getDefinition() +  
+	                   "' is not valid. The referenced function bean or one of its components does not exist");  
+	          }  
+	       }  
+	    }  
+	    /**  
+	     * 根据 spring.cloud.stream 配置中配置的 inputBindings，outputBindings创建对应的 BindableFunctionProxyFactory 代理绑定工厂  
+	     */  
+	    this.createStandAloneBindingsIfNecessary(this.applicationContext.getBean(BindingServiceProperties.class));
+	}
 }
 ```
 
-##### BeanFactoryAwareFunctionRegistry
+#### BeanFactoryAwareFunctionRegistry
 
 这个 **spring .cloud.function** 提供的用于注册bean中函数接口的工厂类型
 
@@ -273,7 +269,46 @@ private static class FunctionBindingRegistrar implements InitializingBean, Appli
   - 通过类型去查询,如果传入的类型为空,直接返回容器中所有的 Function、Supplier、Consumer、BiFunction、BiConsumer、FunctionRegistration等类型
   - 如果不为空则根据类型去容器中查询
 
-#### 1.4 配置类
+#### AbstractBindingLifecycle
+
+通过自动装配 **BindingServiceConfiguration** 中装配并且通过 **BindingsLifecycleController** 控制器来调用对应的方法来自动进行创建消费者和生产者
+
+- InputBindingLifecycle：创建消费者
+- OutputBindingLifecycle：创建生产者
+
+比较核心的方法就是 **doStartWithBindable()** 通过 **Bindable** 也就是上面创建的 **BindableFunctionProxyFactory** 来进行调用并且通过 **BindingService** 来进行创建
+
+```java
+void doStartWithBindable(Bindable bindable) {  
+    Collection<Binding<Object>> bindableBindings = bindable  
+          .createAndBindOutputs(this.bindingService);  
+    if (!CollectionUtils.isEmpty(bindableBindings)) {  
+       this.outputBindings.addAll(bindableBindings);  
+    }  
+}
+
+@Override  
+public Collection<Binding<Object>> createAndBindOutputs(  
+    BindingService bindingService) {  
+    List<Binding<Object>> bindings = new ArrayList<>();  
+    // 遍历输出的持有器  
+    for (Map.Entry<String, BoundTargetHolder> boundTargetHolderEntry : this.outputHolders  
+       .entrySet()) {  
+       BoundTargetHolder boundTargetHolder = boundTargetHolderEntry.getValue();  
+       // key值为函数的名称  
+       String outputTargetName = boundTargetHolderEntry.getKey();  
+       // boundTargetHolder.getBoundTarget() 则为创建的消息管道
+       if (boundTargetHolderEntry.getValue().isBindable()) {  
+          bindings.add(bindingService.bindProducer(  
+             boundTargetHolder.getBoundTarget(), outputTargetName));  
+       }  
+    }  
+    return bindings;  
+}
+```
+
+
+#### 相关配置类
 
 - StreamFunctionConfigurationProperties: 用于映射 **spring.cloud.stream.function** 配置属性
 - BindingServiceProperties: 用于映射 **spring.cloud.stream** 属性
@@ -287,18 +322,113 @@ private static class FunctionBindingRegistrar implements InitializingBean, Appli
 - RocketMQBinderConfigurationProperties:rocketmq绑定器的额外映射配置,用于配置扩展信息的
 - RocketMQExtendedBindingProperties:用于配置文件中 **spring.cloud.stream.rocketmq**
 
+![[images/Stream配置包含关系.svg]]
+
+
+### 2. BindingService
+
+BindingService创建消费者和生产者的核心方法
+
+```java
+public class BindingService {  
+    /**  
+     * 配置信息 spring.cloud.stream 映射的  
+     */  
+    private final BindingServiceProperties bindingServiceProperties;  
+  
+    /**  
+     * 生产者的绑定关系  
+     */  
+    private final Map<String, Binding<?>> producerBindings = new HashMap<>();  
+  
+    /**  
+     * 消费者的绑定关系
+     */  
+    private final Map<String, List<Binding<?>>> consumerBindings = new HashMap<>();  
+  
+    /**  
+     * 任务定时器  
+     */  
+    private final TaskScheduler taskScheduler;  
+  
+    /**  
+     * Binder 的工厂类  
+     */  
+    private final BinderFactory binderFactory;
+
+}
+```
+
+执行生产者的绑定:
+
+- output：指定的消息管道类型，目前默认 DirectWithAttributesChannel
+- outputName：指定的生产者的名称，也就是在配置文件中指定的
+- cache：是否将生产者和管道的创建的绑定器进行缓存
+- binder：是否指定了绑定器，没有指定就从spring容器中进行获取
+
+```java
+public <T> Binding<T> bindProducer(T output, String outputName, boolean cache, @Nullable Binder<T, ?, ProducerProperties> binder) {  
+    // 读取spring.cloud.stream.bindings.<name>.destination 的配置名称  
+    String bindingTarget = this.bindingServiceProperties.getBindingDestination(outputName);  
+    // 获取到输入的消息管道类型，默认使用的是DirectWithAttributesChannel  
+    Class<?> outputClass = output.getClass();  
+    // 判断管道消息是否实现了 advised    if (output instanceof Advised advisedOutput) {  
+       outputClass = Stream.of(advisedOutput.getProxiedInterfaces()).filter(c -> !c.getName().contains("org.springframework")).findFirst()  
+             .orElse(outputClass);  
+    }  
+    // 如果传入的binder绑定器为空，那么需要通过this.binderFactory绑定器工厂来进行获取，Binder也就是通过各个厂商来进行实现  
+    if (binder == null) {  
+       binder = (Binder<T, ?, ProducerProperties>) this.getBinder(outputName, outputClass);  
+    }  
+    // 获取到生产者  
+    ProducerProperties producerProperties = this.bindingServiceProperties  
+          .getProducerProperties(outputName);  
+  
+    // 如果绑定器实现了ExtendedPropertiesBinder，那么就会将扩展的生产者配置信息和生产者配置信息进行合并  
+    if (binder instanceof ExtendedPropertiesBinder extendedPropertiesBinder) {  
+       Object extension = extendedPropertiesBinder.getExtendedProducerProperties(outputName);  
+       ExtendedProducerProperties extendedProducerProperties = new ExtendedProducerProperties<>(  
+             extension);  
+       BeanUtils.copyProperties(producerProperties, extendedProducerProperties);  
+  
+       producerProperties = extendedProducerProperties;  
+    }
+    // 设置绑定名称  
+    producerProperties.populateBindingName(outputName);  
+    // 验证  
+    this.validate(producerProperties);  
+    /**  
+     * 执行生产者信息进行绑定，将对应的消息管道和对应的消息生产者进行绑定  
+     * 判断是否指定了重试次数 bindingRetryInterval，默认是重试30次  
+     */  
+    Binding<T> binding = this.doBindProducer(output, bindingTarget, binder,  
+          producerProperties);  
+    // 更新分区数  
+    ProducerProperties originalProducerProperties = this.bindingServiceProperties  
+       .getProducerProperties(outputName);  
+    if (originalProducerProperties.getPartitionCount() < producerProperties.getPartitionCount()) {  
+       originalProducerProperties.setPartitionCount(producerProperties.getPartitionCount());  
+    }  
+    if (cache) {  
+       this.producerBindings.put(outputName, binding);  
+    }  
+    return binding;  
+}
+```
+
+
+
+
 ### 2. Binder
 
 **Binder** 通过spring cloud stream抽象为中间件跟spring cloud的连接器,通过各个中间件厂商来分别进行实现,下面是 **Binder** 的依赖关系图可以看到 **rocketmq、kafka、rabbitmq** 等都实现了自己中间件的 **Binder** 绑定器
 
 ![Binder](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/Binder.png)
 
-绑定器方法三个泛型类型
-
+绑定器方法三个泛型类型：
 - T具体绑定的类型子类确定
 - C消费者配置
 - P生产者配置
-
 ```java
 public interface Binder<T, C extends ConsumerProperties, P extends ProducerProperties> {
 
@@ -336,14 +466,13 @@ public interface Binder<T, C extends ConsumerProperties, P extends ProducerPrope
 }
 ```
 
-通过继承的借口图,整个继承图是子类都继承抽象类 **AbstractMessageChannelBinder**, 然后继承 **AbstractBinder**
+通过继承的接口图,整个继承图是子类都继承抽象类 **AbstractMessageChannelBinder**, 然后继承 **AbstractBinder**
 
 AbstractBinder:三个泛型指定了配置类型,继承了 InitializingBean 在初始化会调用 **afterPropertiesSet()** 方法设置一下表达式的解析器,然后调用 **onInit()**
 
 ```java
 public abstract class AbstractBinder<T, C extends ConsumerProperties, P extends ProducerProperties>
 		implements ApplicationContextAware, InitializingBean, Binder<T, C, P> {
-  
   
   public final void afterPropertiesSet() throws Exception {
 		Assert.notNull(this.applicationContext,
@@ -419,12 +548,12 @@ public class RocketMQMessageChannelBinder extends
 
 ###### 方法
 
-- doBindProducer:执行创建生产者,将大部分公共逻辑进行编写了,最终交给中间件实现的方法是 **createProducerMessageHandler()** 方法创建自己的 **MessageChannel**,例如rocketmq :RocketMQProducerMessageHandler
-- doBindConsumer:执行创建消费者,最终创建由 **createConsumerEndpoint()** 方法让子类进行创建 **MessageProducer**,例如rocketmq: **RocketMQInboundChannelAdapter**,然后父类创建一个包装类 **DefaultBinding** 
+- doBindProducer：执行创建生产者,将大部分公共逻辑进行编写了,最终交给中间件实现的方法是 **createProducerMessageHandler()** 方法创建自己的 **MessageChannel**,例如rocketmq :RocketMQProducerMessageHandler
+- doBindConsumer：执行创建消费者,最终创建由 **createConsumerEndpoint()** 方法让子类进行创建 **MessageProducer**,例如rocketmq: **RocketMQInboundChannelAdapter**,然后父类创建一个包装类 **DefaultBinding** 
 
 #### 2.1 绑定消费者
 
-**doBindConsumer** 方法是 **AbstractMessageChannelBinder** 抽取的公共方法 **createConsumerEndpoint()** 方法教给了子类进行实现
+**doBindConsumer** 方法是 **AbstractMessageChannelBinder** 抽取的公共方法 **createConsumerEndpoint()** 方法交给了子类进行实现
 
 ```java
 public final Binding<MessageChannel> doBindConsumer(String name, String group,
@@ -660,7 +789,190 @@ Bindable 主要的目的是用户将当前服务中的 **函数方法或者其�
 
 ![image-20240304154511279](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20240304154511279.png)
 
+BindableFunctionProxyFactory 工厂代理器来执行启动时将函数接口和消费topic进行绑定，是由 **FunctionConfiguration.FunctionBindingRegistrar** 进行注册到spring容器中进行创建函数和消费关联的
+
+```java
+private static class FunctionBindingRegistrar implements InitializingBean, ApplicationContextAware, EnvironmentAware {
+
+	public void afterPropertiesSet() throws Exception {  
+	    /**  
+	     * 如果 spring.cloud.function.definition配置属性定义了数据，那么优先使用spring.cloud.function.definition配置  
+	     */  
+	    this.determineFunctionName(functionCatalog, environment);  
+	    //处理spring中定义的函数接口bean对象  
+	    if (StringUtils.hasText(streamFunctionProperties.getDefinition())) {  
+	       //通过配置的函数名称从spring容器中获取到对应的bean名称  
+	       String[] functionDefinitions = this.filterEligibleFunctionDefinitions();  
+	       for (String functionDefinition : functionDefinitions) {  
+	          //根据定义的名称获取到对应的函数包装类，这是去spring中通过名称进行获取函数接口  
+	          FunctionInvocationWrapper function = functionCatalog.lookup(functionDefinition);  
+	          if (function != null) {  
+	             //根据函数的类型来判断是消费者还是生产者，如果是Supplier类型那么就是生产者，如果是Consumer、RoutingFunction函数就是消费者  
+	             if (function.isSupplier()) {  
+	                this.inputCount = 0;  
+	                //方法输出的返回值个数  
+	                this.outputCount = this.getOutputCount(function, true);  
+	             }  
+	             else if (function.isConsumer() || function.isRoutingFunction()) {  
+	                this.inputCount = FunctionTypeUtils.getInputCount(function);  
+	                this.outputCount = 0;  
+	             }  
+	             else {  
+	                this.inputCount = FunctionTypeUtils.getInputCount(function);  
+	                if (function.isWrappedBiConsumer()) {  
+	                   this.outputCount = 0;  
+	                }  
+	                else {  
+	                   this.outputCount = this.getOutputCount(function, false);  
+	                }  
+	             }  
+	             AtomicReference<BindableFunctionProxyFactory> proxyFactory = new AtomicReference<>();  
+	             //创建默认的函数代理工厂 BindableFunctionProxyFactory             if (function.isInputTypePublisher()) {  
+	                //如果是 Mono或者Flux等响应式的话 需要设置支持的特性配置  
+	                final SupportedBindableFeatures supportedBindableFeatures = new SupportedBindableFeatures();  
+	                supportedBindableFeatures.setPollable(false);  
+	                supportedBindableFeatures.setReactive(true);  
+	  
+	                proxyFactory.set(new BindableFunctionProxyFactory(functionDefinition,  
+	                   this.inputCount, this.outputCount, this.streamFunctionProperties, supportedBindableFeatures));  
+	             }  
+	             else {  
+	                proxyFactory.set(new BindableFunctionProxyFactory(functionDefinition,  
+	                   this.inputCount, this.outputCount, this.streamFunctionProperties));  
+	             }  
+	             //注入到bean工厂  
+	             ((GenericApplicationContext) this.applicationContext).registerBean(functionDefinition + "_binding",  
+	                BindableFunctionProxyFactory.class, () -> proxyFactory.get());  
+	          }  
+	          else {  
+	             logger.warn("The function definition '" + streamFunctionProperties.getDefinition() +  
+	                   "' is not valid. The referenced function bean or one of its components does not exist");  
+	          }  
+	       }  
+	    }  
+	    //根据 spring.cloud.stream 配置中配置的 inputBindings，outputBindings创建对应的 BindableFunctionProxyFactory 代理绑定工厂  
+	    this.createStandAloneBindingsIfNecessary(applicationContext.getBean(BindingServiceProperties.class));  
+	  
+	}
+
+}
+
+```
+
+每一个函数都会创建一个 **BindableFunctionProxyFactory** 函数代理接口
+
+```java
+public class BindableFunctionProxyFactory extends BindableProxyFactory implements ApplicationContextAware {
+
+	/**  
+	 * 函数接口的输入参数数量，如果不是Mono等响应式的话一般是1或者0  
+	 */private final int inputCount;  
+	  
+	/**  
+	 * 函数接口输出数量  
+	 */  
+	private final int outputCount;  
+	  
+	/**  
+	 * 函数名称，会根据参数的个数决定最终绑定的名称  
+	 */  
+	private final String functionDefinition;  
+	  
+	/**  
+	 * 函数配置，会将 StreamFunctionConfigurationProperties bindings属性进行映射  
+	 */  
+	private final StreamFunctionProperties functionProperties;  
+	  
+	/** 管道绑定支持那种方式，轮询和响应式 */  
+	private final SupportedBindableFeatures supportedBindableFeatures;
+
+
+	public void afterPropertiesSet() {  
+	    populateBindingTargetFactories(beanFactory);  
+	    Assert.notEmpty(BindableFunctionProxyFactory.this.bindingTargetFactories,  
+	          "'bindingTargetFactories' cannot be empty");  
+	  
+	    if (this.inputCount > 0) {  
+	       for (int i = 0; i < inputCount; i++) {  
+	          //给每一个消费者后面都追加in-i的名称，将名称都注入到  inputHolders进行缓存，然后BindingService进行绑定  
+	          this.createInput(this.buildInputNameForIndex(i));  
+	       }  
+	    }  
+	  
+	    if (this.outputCount > 0) {  
+	       for (int i = 0; i < outputCount; i++) {  
+	          this.createOutput(this.buildOutputNameForIndex(i));  
+	       }  
+	    }  
+	}
+
+
+	private void createInput(String name) {  
+	    //根据拼接的函数名称跟配置文件中绑定的名称进行映射，名称都是为 xxx-in-index index为输入参数的索引值，一般都为1  
+	    if (this.functionProperties.getBindings().containsKey(name)) {  
+	       name = this.functionProperties.getBindings().get(name);  
+	    }  
+	    //更新管道的名称和函数的名称相互关联上  
+	    updateChannelNameToFunctionName(name);  
+	    /**  
+	     * 根据支持的类型来创建管道  
+	     * 1. 轮训的方式 PollableMessageSource  
+	     * 2. 响应式 FluxMessageChannel  
+	     * 3. 默认的订阅管道 SubscribableChannel  
+	     */    if (this.supportedBindableFeatures.isPollable()) {  
+	       PollableMessageSource pollableSource = (PollableMessageSource) getBindingTargetFactory(PollableMessageSource.class).createInput(name);  
+	       // 判断spring容器中是否包含该名称的bean，如果没有则注册该名称的bean
+	       if (context != null && !context.containsBean(name)) {  
+	          context.registerBean(name, PollableMessageSource.class, () -> pollableSource);  
+	       }  
+	       this.inputHolders.put(name, new BoundTargetHolder(pollableSource, true));  
+	    }  
+	    else if (this.supportedBindableFeatures.isReactive()) {  
+	       this.inputHolders.put(name,  
+	          new BoundTargetHolder(getBindingTargetFactory(FluxMessageChannel.class)  
+	             .createInput(name), true));  
+	    }  
+	    else {  
+	       //默认都采用 SubscribableChannel 管道进行数据订阅，通过BindingTargetFactory工厂类型进行创建SubscribableChannelBindingTargetFactory  
+	       this.inputHolders.put(name,  
+	             new BoundTargetHolder(getBindingTargetFactory(SubscribableChannel.class)  
+	                   .createInput(name), true));  
+	    }  
+	}
+
+}
+```
+
+
+AbstractBindingLifecycle 会注入所有的 **Bindable** 实现类来执行函数和对应topic的绑定操作
+- InputBindingLifecycle：消费者绑定器
+- OutputBindingLifecycle：生产者绑定器
+
+```java
+public abstract class AbstractBindingLifecycle implements SmartLifecycle {
+	
+	private final Map<String, Bindable> bindables;
+
+	public void start() {  
+	    if (!this.running) {  
+	       if (this.context != null) {  
+	          this.bindables.putAll(context.getBeansOfType(Bindable.class));  
+	       }  
+	       //开始对生产者和消费者进行绑定  
+	       this.bindables.values().forEach(this::doStartWithBindable);  
+	       this.running = true;  
+	    }  
+	}
+
+}
+```
+
 ### 4. BindingTargetFactory
+
+BindingTargetFactory 用于根据对应的名称创建 **MessageChannel** 消息管道，根据不同类型的管道通过工厂类进行创建
+
+- FluxMessageChannel：FluxMessageChannelBindingTargetFactory
+- SubscribeChannel：SubscribableChannelBindingTargetFactory
 
 ![image-20240304155759352](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20240304155759352.png)
 
@@ -669,10 +981,6 @@ Bindable 主要的目的是用户将当前服务中的 **函数方法或者其�
 目前 Binding 就使用了一个 **DefaultBinding** 类来记录一下绑定的相关信息
 
 ![image-20240314165602801](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20240314165602801.png)
-
-### 6. BindingService
-
-
 
 ### 7. MessageChannel
 
@@ -840,7 +1148,7 @@ public class UnicastingDispatcher extends AbstractDispatcher {
 
 ## 四、框架封装
 
-如果需要进行额外的中间件封装,需要优先实现下面的组件
+如果需要进行其他的中间件封装,需要优先实现下面的组件
 
 ### 1. 配置相关
 
@@ -889,23 +1197,11 @@ public class AtomMqttExtendedBindingProperties
      */
     private static final String DEFAULTS_PREFIX = "spring.cloud.stream.mqtt.default";
 
-    /**
-     * Gets defaults prefix *
-     *
-     * @return the defaults prefix
-     * @since 2024.2.0
-     */
     @Override
     public String getDefaultsPrefix() {
         return DEFAULTS_PREFIX;
     }
 
-    /**
-     * Gets extended properties entry class *
-     *
-     * @return the extended properties entry class
-     * @since 2024.2.0
-     */
     @Override
     public Class<? extends BinderSpecificPropertiesProvider> getExtendedPropertiesEntryClass() {
         return AtomMqttSpecificPropertiesProvider.class;
