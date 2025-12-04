@@ -1,0 +1,21 @@
+version: '3'
+services:
+  nacos:
+    image: mysql:8.0
+    restart: always
+    container_name: mysql8.0
+    ports:
+      - "3306:3306"
+    privileged: true
+    volumes:
+      - "/usr/local/soft/mysql/conf:/etc/mysql/conf.d" #自定义配置文件，将my.cnf进行映射到conf.d路径，默认mysql回去把conf.d路径下的配置进行读取
+#      - "/usr/local/soft/mysql/logs:/var/log/mysql"   #日志文件映射路径
+#      - "/usr/local/soft/mysql/data:/var/lib/mysql" #自定义数据存储路径，用于测试就不需要挂载了
+    environment:
+      MYSQL_ROOT_PASSWORD: root #设置密码
+    networks:
+      - nginx_network
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+networks:
+  nginx_network:
+    external: true

@@ -24,7 +24,7 @@ thumbnail: https://images.unsplash.com/photo-1583912267856-1fcdf6e0a1f9?crop=ent
 
 # 2. 时序数据库
 
- ![img|500x283](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/v2-3a13cb8a90bcb05c8619e897a6bfb284_r.jpg) 
+ ![img|500x283](images/v2-3a13cb8a90bcb05c8619e897a6bfb284_r.jpg) 
 
 ## 2.1 特点
 
@@ -140,7 +140,7 @@ serverPort                6030
 
 上面客户端安装成功之后，路径就是下面的结构，在安装成功之后会默认将 **driver** 路径下面的 **taos.dll** 文件拷贝到 win10 的系统库路径下面
 
-![1667443300031](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1667443300031.png)
+![1667443300031](images/1667443300031.png)
 
 ### 配置客户端
 
@@ -299,19 +299,19 @@ public class TdEngineDemo {
 
 执行完代码后，会发现插入了两张子表 **device_stat_d1、device_stat_d2** 两个设备的信息
 
-![1667445144530](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1667445144530.png)
+![1667445144530](images/1667445144530.png)
 
 如果要查询某一个设备的信息，我们可以通过两种方式进行查询，第一张是通过超级表指定 **tag** 进行查询
 
 > select * from device_stat where deviceId = 'd1';
 
-![1667445256450](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1667445256450.png)
+![1667445256450](images/1667445256450.png)
 
 第二种方式直接按照指定数据库名称进行查询
 
 >select * from device_stat_d1;
 
-![1667445305991](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1667445305991.png)
+![1667445305991](images/1667445305991.png)
 
 ### 查询函数
 
@@ -852,7 +852,7 @@ public class TdengineTest {
 
 开启两个线程对数据库通过 **ORM** 框架插入 **10W** 数据，**Tdengine** 耗时为 **3分钟** ，**mysql** 耗时为 **10分钟**
 
-![1667805573094](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1667805573094.png)
+![1667805573094](images/1667805573094.png)
 
 ## 7.2 内存
 
@@ -868,21 +868,21 @@ mysql插入10w的数据，**8M** 左右
 > select concat(round(data_length/1024/1024,2),'MB') as data, TABLE_ROWS as tr from information_schema.tables where TABLE_NAME = 'device_stat';
 > ```
 
-![1667807131715](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1667807131715.png)
+![1667807131715](images/1667807131715.png)
 
 ## 7.3 查询
 
 同时查询 10w 条数据：Tdengine的查询效率是mysql的一倍
 
-![1667875181284](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1667875181284.png)
+![1667875181284](images/1667875181284.png)
 
 同时查询 20w 数据
 
-![1667875876534](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1667875876534.png)
+![1667875876534](images/1667875876534.png)
 
 Tdeinge查询500w的数据时间差不多17秒左右
 
-![1668591048618](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1668591048618.png)
+![1668591048618](images/1668591048618.png)
 
 # 8. 改造方案
 
@@ -890,11 +890,11 @@ Tdeinge查询500w的数据时间差不多17秒左右
 
 > https://www.cnblogs.com/taosdata/p/15702785.html
 
-![](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/%E5%8E%9F%E5%A7%8B%E6%96%B9%E6%A1%88.svg)
+![](images/原始方案.svg)
 
 新方案采用 springboot + mybatis plus + tdengine + mysql，其中mysql存储非时序性的数据，td存储设备状态等时序性数据利用 td 的数据压缩能力可以节省原来 1/10 的内存空间；甚至还可以利用 **tdengine** 消息订阅功能以及 http接口方式，实现多种数据的投递以及消费
 
-![](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88.svg)
+![](images/改造方案.svg)
 
 ## 8.1 心跳数据
 

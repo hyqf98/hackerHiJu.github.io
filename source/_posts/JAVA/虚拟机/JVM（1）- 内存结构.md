@@ -23,17 +23,17 @@ published: true
 
 逐级包含的关系
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/20210207154634171.png)
+![在这里插入图片描述](images/20210207154634171.png)
 
 ## 3. 常见JVM实现
 
 不同的公司只要遵循虚拟机规范，都可以自己实现
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/20210207155653261.png)
+![在这里插入图片描述](images/20210207155653261.png)
 
 ## 4. 学习路线
 
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/20210207155820178.png)
+![在这里插入图片描述](images/20210207155820178.png)
 
 - ClassLoader：将编译后的二进制文件加载到JVM中运行
 - Method Area：类放在方法区中
@@ -46,7 +46,7 @@ published: true
 
 # 二、 内存结构
 
-![image-20210913144428655](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210913144428655.png)
+![image-20210913144428655](images/image-20210913144428655.png)
 
 ## 1. 程序计数器
 
@@ -58,7 +58,7 @@ Program Counter Register 程序计数器（寄存器）
 
 是记录下一条 jvm 指令的执行地址行号
 
-![image-20210910111558467](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910111558467.png)
+![image-20210910111558467](images/image-20210910111558467.png)
 
 - 解释器转换代码会机器码，将下一行代码的地址存到计数器当中，执行完之后去计数器中拿取下一条数据
 - 多线程环境，寄存器会记录下一行指令的地址行号，以便切换回来时可以继续执行
@@ -74,7 +74,7 @@ Program Counter Register 程序计数器（寄存器）
 - 每个栈由多个栈帧（Frame）组成，对应着每次调用方法时所占用的内存
 - 每个线程只能有一个活动栈帧对应着当前正在执行的方法
 
-![image-20210910112355067](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910112355067.png)
+![image-20210910112355067](images/image-20210910112355067.png)
 
 ### 问题分析
 
@@ -90,14 +90,14 @@ Program Counter Register 程序计数器（寄存器）
    - 如果方法内局部变量没有逃离方法的作用区，它是线程安全的
    - 如果局部变量引用了对象，并且逃离了方法的作用区，它是线程不安全的
 
-![image-20210910141553423](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910141553423.png)
+![image-20210910141553423](images/image-20210910141553423.png)
 
 ### 内存溢出
 
 - 循环递归调用，入栈的栈帧比较多，并且没有收集回收
 - 栈帧过大导致内存溢出
 
-![image-20210910141903711](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910141903711.png)
+![image-20210910141903711](images/image-20210910141903711.png)
 
 ### 线程运行诊断
 
@@ -110,21 +110,21 @@ Program Counter Register 程序计数器（寄存器）
 - ps H -eo pid,tid,%cpu | grep 进程id：定位具体是哪个线程引起的占用cpu过高
 - jstack 进程id （需要将十进程线程号转换成十六进制号）
 
-![image-20210910144500045](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910144500045.png)
+![image-20210910144500045](images/image-20210910144500045.png)
 
-![image-20210910144534701](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910144534701.png)
+![image-20210910144534701](images/image-20210910144534701.png)
 
-![image-20210910145341619](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910145341619.png)
+![image-20210910145341619](images/image-20210910145341619.png)
 
-![image-20210910145720366](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910145720366.png)
+![image-20210910145720366](images/image-20210910145720366.png)
 
 案例2：程序运行很长时间都没有得到自己想要的结果（线程死锁）
 
-![image-20210910150600896](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910150600896.png)
+![image-20210910150600896](images/image-20210910150600896.png)
 
-![image-20210910150622803](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910150622803.png)
+![image-20210910150622803](images/image-20210910150622803.png)
 
-![image-20210910150837983](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910150837983.png)
+![image-20210910150837983](images/image-20210910150837983.png)
 
 ## 3. 本地方法栈
 
@@ -145,7 +145,7 @@ Program Counter Register 程序计数器（寄存器）
 
 a = a + a进行字符串拼接，每次拼接都会生成新的字符串对象，而且arrayList集合一直处于引用范围之内，就导致垃圾回收不了
 
-![image-20210910151634764](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910151634764.png)
+![image-20210910151634764](images/image-20210910151634764.png)
 
 ### 堆内存诊断
 
@@ -156,17 +156,17 @@ a = a + a进行字符串拼接，每次拼接都会生成新的字符串对象�
 
 #### GC之后内存依旧占用很高
 
-![image-20210910160109821](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910160109821.png)
+![image-20210910160109821](images/image-20210910160109821.png)
 
 查找出最大的对象
 
-![image-20210910160143147](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910160143147.png)
+![image-20210910160143147](images/image-20210910160143147.png)
 
 可以发现其中最大的属性值是哪一个，可以发现每一个age属性都有1m多，总共创建了999个对象
 
-![image-20210910160310422](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910160310422.png)
+![image-20210910160310422](images/image-20210910160310422.png)
 
-![image-20210910160426511](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910160426511.png)
+![image-20210910160426511](images/image-20210910160426511.png)
 
 ## 5. 方法区
 
@@ -181,13 +181,13 @@ a = a + a进行字符串拼接，每次拼接都会生成新的字符串对象�
 
 - 也会导致内存溢出
 
-![image-20210910161238546](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910161238546.png)
+![image-20210910161238546](images/image-20210910161238546.png)
 
 ### 5.2 内存溢出
 
 -XX: MaxMetaspaceSize=8m  调整方法区的大小（默认使用的系统内存，很难演示出元空间OOM）
 
-![image-20210910163037193](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210910163037193.png)
+![image-20210910163037193](images/image-20210910163037193.png)
 
 ### 5.3 使用场景
 
@@ -214,11 +214,11 @@ javap -v .class 可以查看类的基本信息。
 
 每次操作时，会存两份数据，系统内存存一次，在java缓存区中再存在一次
 
-![image-20210929160545411](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210929160545411.png)
+![image-20210929160545411](images/image-20210929160545411.png)
 
 直接内存，就是少拷贝了一份数据
 
-![image-20210929160745231](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20210929160745231.png)
+![image-20210929160745231](images/image-20210929160745231.png)
 
 会存在OOM异常；
 

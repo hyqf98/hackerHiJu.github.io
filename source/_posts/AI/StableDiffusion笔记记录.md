@@ -58,7 +58,7 @@ git仓库中下载sd源码 **https://github.com/AUTOMATIC1111/stable-diffusion-w
 
 [安装中文插件](https://github.com/dtlnor/stable-diffusion-webui-localization-zh_CN)：user interface中选择 Localization为中文即可
 
-![image-20240313213624093](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240313213624093.png)
+![image-20240313213624093](images/image-20240313213624093.png)
 
 ### 1.2.2 openvino加速插件
 
@@ -68,7 +68,7 @@ git仓库中下载sd源码 **https://github.com/AUTOMATIC1111/stable-diffusion-w
 
 [提示词插件](https://github.com/thisjam/sd-webui-oldsix-prompt)：NSFW 标签的提示词可以放到对应插件的 yours路径下面然后重启
 
-![image-20240313221035400](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240313221035400.png)
+![image-20240313221035400](images/image-20240313221035400.png)
 
 ### 1.2.3 提示词翻译插件（推荐）
 
@@ -99,18 +99,18 @@ stable-diffusion-webui-rembg：非常强大的抠图功能
 
 第一步先选择对应的模型然后直接默认值跑预设，输出到处模型成功即可，模型的安装路径为 **\models\Unet-trt**，在设置里面用户界面找到 **sd-unet** 即可
 
-![image-20240318205840741](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240318205840741.png)
+![image-20240318205840741](images/image-20240318205840741.png)
 
 **注意事项：如果使用的是默认预设，需要注意的是每次生成图片的参数不能超过模型规定的最大值和最小值之间，并且数值需要是64的倍数**
 现在就可以看到出图的时间是非常的快了
 
-![image-20240318210139874](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240318210139874.png)
+![image-20240318210139874](images/image-20240318210139874.png)
 
 #### 预设参数
 
 相同的参数设定下静态的预设比动态的预设性能更高显存占用更低
 
-![image-20240318212229709](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240318212229709.png)
+![image-20240318212229709](images/image-20240318212229709.png)
 
 - 512 x 512 | Batch Size1(Static)
     - static表示所有的参数都是固定的，每批的数量数，还有最优的高度和最高的宽度，所有的都固定了
@@ -124,7 +124,7 @@ stable-diffusion-webui-rembg：非常强大的抠图功能
     - **要想使用高分辨率修复，需要至少两个静态。例如：768x768和1536x1536 要与原尺寸和放大尺寸做匹配**
     - **LoRA转换**：给lora加速，将lora转换TensorRT模型后，lora会自动融入到模型当中不用选择里面自带
 
-![image-20240318212616607](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240318212616607.png)
+![image-20240318212616607](images/image-20240318212616607.png)
 
 ### 1.2.6 图片放大插件
 
@@ -159,7 +159,7 @@ stable-diffusion-webui-rembg：非常强大的抠图功能
 - hand_yolov8n.pt：修复手部
 - person_yolov8m-seg.pt：增加人物整体细节的模型
 
-![image-20240322111448369](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240322111448369.png)
+![image-20240322111448369](images/image-20240322111448369.png)
 
 #### 参数说明
 
@@ -203,7 +203,7 @@ stable-diffusion-webui-rembg：非常强大的抠图功能
 
 正向提示词描述内容（人物例子）：主体、表情、服装、场景、环境、镜头、灯光、风格、画质、渲染器（其他的元素提示词）
 
-![image-20240313214625819](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240313214625819.png)
+![image-20240313214625819](images/image-20240313214625819.png)
 
 Tag的格式：
 
@@ -243,7 +243,7 @@ Tag的格式：
 - 数值越低：细节越少，渲染越快
 - 建议范围：20 - 40
 
-![](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/steps.png)
+![](images/steps.png)
 
 ## 2.5 采样器
 
@@ -254,7 +254,7 @@ Tag的格式：
 - DDIM & PLMS：sd最早的采样器（过时）
 - DPM：**比较建议使用DPM++SDE Karras** 做人像
 
-![](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E9%87%87%E6%A0%B7%E5%99%A8.png)
+![](images/采样器.png)
 
 ## 2.6 面部修复
 
@@ -293,7 +293,7 @@ Tag的格式：
 
 循环标志：复制上一张图的种子
 
-![image-20240313222409523](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240313222409523.png)
+![image-20240313222409523](images/image-20240313222409523.png)
 
 ## 2.13 随机数差异种子
 
@@ -307,7 +307,7 @@ Tag的格式：
 
 用于保存提示词的地方
 
-![image-20240314211634069](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240314211634069.png)
+![image-20240314211634069](images/image-20240314211634069.png)
 
 # 4. 嵌入式（Embedding）
 
@@ -337,7 +337,7 @@ Tag的格式：
 
 图片制作出来像是一个矩阵一样，主要看不同灯光下的区别
 
-![image-20240314213810568](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240314213810568.png)
+![image-20240314213810568](images/image-20240314213810568.png)
 
 ## 8.2 从文本框或文件载入提示词
 
@@ -355,9 +355,9 @@ Tag的格式：
 
 可以根据选择的参数进行调整来对比各个模型和参数之间的效果
 
-![image-20240314214555324](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240314214555324.png)
+![image-20240314214555324](images/image-20240314214555324.png)
 
-![image-20240314214546171](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240314214546171.png)
+![image-20240314214546171](images/image-20240314214546171.png)
 
 例如：需要对比不同迭代步数、CFG以及不同采样器对提示词的影响，可以设置如下：
 
@@ -365,7 +365,7 @@ Tag的格式：
 - y轴CFG: 5-10[3] 提示词的相关性，也是五张图，由模型来分配
 - z轴sampler：表示在两种采样器的情况下进行对比
 
-![image-20240316110710073](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240316110710073.png)
+![image-20240316110710073](images/image-20240316110710073.png)
 
 ## 8.4 StableSR
 
@@ -417,7 +417,7 @@ Tag的格式：
 
 **有些会翻译为附加功能**
 
-![image-20240317110251842](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240317110251842.png)
+![image-20240317110251842](images/image-20240317110251842.png)
 
 - 单张图像：单张图进行处理
 - 批量处理：多张图上传
@@ -478,7 +478,7 @@ Tag的格式：
 
 右边会出现一些图片的一些提示词和反向提示
 
-![image-20240317113239780](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240317113239780.png)
+![image-20240317113239780](images/image-20240317113239780.png)
 
 # 8. lora训练
 
@@ -523,7 +523,7 @@ Tag的格式：
 
 安装**SD** 插件后就有
 
-![image-20240314215754826](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240314215754826.png)
+![image-20240314215754826](images/image-20240314215754826.png)
 
 ## 8.5 Tag标记
 
@@ -538,21 +538,21 @@ Tag的格式：
     - log：运行的日志
     - model：模型的保存地方
 
-![image-20240314220924696](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240314220924696.png)
+![image-20240314220924696](images/image-20240314220924696.png)
 
 身体每张训练100步，头部训练100步，根据图片来定义
 
-![image-20240314221258730](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240314221258730.png)
+![image-20240314221258730](images/image-20240314221258730.png)
 
 然后将输出的地址粘贴到输出栏中
 
-![image-20240314221234992](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240314221234992.png)
+![image-20240314221234992](images/image-20240314221234992.png)
 
 ### 2. Bucket自动裁剪
 
 宽高不需要指定（保持默认的宽高），让AI自动来适应，一般使用 **kohyass** 使用Bucket
 
-![image-20240314221814199](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240314221814199.png)
+![image-20240314221814199](images/image-20240314221814199.png)
 
 ### 3. 创建镜像副本
 
@@ -567,11 +567,11 @@ Tag的格式：
 
 执行完之后就会在对应的路径下面生成两个文件，一个图片，另一个是跟图片相同的描述值，里面可以自己进行修改
 
-![image-20240314223349913](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240314223349913.png)
+![image-20240314223349913](images/image-20240314223349913.png)
 
 ## 8.6 kohya_ss
 
-![image-20240314222632209](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240314222632209.png)
+![image-20240314222632209](images/image-20240314222632209.png)
 
 - Dreambooth：训练大模型
 
@@ -587,4 +587,4 @@ Tag的格式：
 
 Configuration：预设值，根据显存进行调整的，可以直接下载
 
-![image-20240314222957017](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20240314222957017.png)
+![image-20240314222957017](images/image-20240314222957017.png)

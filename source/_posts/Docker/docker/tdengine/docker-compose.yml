@@ -1,0 +1,22 @@
+version: '3'
+services:
+  tdengine:
+    image: tdengine/tdengine:3.0.1.5
+    container_name: tdengine-server
+    hostname: tdengine-server
+    ports:
+      - "6030:6030"
+      - "6041:6041"
+#      - "6043-6049:6043-6049" 提供给第三方的接口可以根据需要是否打开
+#      - "6043-6049:6043-6049/udp"
+    volumes:
+      - "/usr/local/soft/tdengine/conf/taos.cfg:/etc/taos/taos.cfg"
+#      - "/usr/local/soft/tdengine/data:/var/lib/taos"  #数据目录
+#      - "/usr/local/soft/tdengine/log:/var/log/taos"   #日志目录
+    networks:
+      - nginx_network
+    environment:
+      TAOS_FQDN: tdengine-server
+networks:
+  nginx_network:
+    external: true

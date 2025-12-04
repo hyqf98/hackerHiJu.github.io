@@ -45,7 +45,7 @@ published: true
   - finallize()方法，通过虚拟机创建终结器引，在对象回收时，会将其放入引用队列
   - 通过FinallizeHandler一个优先级很低的线程去检查引用队列中的是否有终结器对象，并且由终结器对象来调用finallize()方法
 
-![image-20211021143108986](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20211021143108986.png)
+![image-20211021143108986](images/image-20211021143108986.png)
 
 设置 Xms20m
 
@@ -57,15 +57,15 @@ soft方法：
 
 中间使用软引用的方法来引用对象，在进行垃圾回收的时候堆内存不足就会回收以前的空间
 
-![image-20211021145716271](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20211021145716271.png)
+![image-20211021145716271](images/image-20211021145716271.png)
 
 软引用也需要占用空间，所以也需要清楚掉，就需要引用队列
 
-![image-20211021150030609](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20211021150030609.png)
+![image-20211021150030609](images/image-20211021150030609.png)
 
 弱引用
 
-![image-20211021150523329](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20211021150523329.png)
+![image-20211021150523329](images/image-20211021150523329.png)
 
 ## 2. 垃圾回收算法
 
@@ -78,7 +78,7 @@ soft方法：
 
 缺点：容易造成内存碎片，如果大对象来时，每个空闲地址都放不下，还是会抛出OOM
 
-![image-20211021150918195](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20211021150918195.png)
+![image-20211021150918195](images/image-20211021150918195.png)
 
 ### 2.2 标记整理算法
 
@@ -86,7 +86,7 @@ soft方法：
 
 缺点：整理时，需要内存移动，还有所有对象引用地址的改变，比较耗性能
 
-![image-20211021151203348](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20211021151203348.png)
+![image-20211021151203348](images/image-20211021151203348.png)
 
 ### 2.3 复制算法
 
@@ -94,11 +94,11 @@ soft方法：
 
 缺点：需要双倍的空间
 
-![image-20211021151521740](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20211021151521740.png)
+![image-20211021151521740](images/image-20211021151521740.png)
 
 ## 3. 垃圾分代（结合前面三种算法）
 
-![image-20211021151626709](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20211021151626709.png)
+![image-20211021151626709](images/image-20211021151626709.png)
 
 新生代：（复制算法）
 
@@ -119,7 +119,7 @@ soft方法：
 
 ## 4. JVM参数
 
-![image-20211028102438721](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20211028102438721.png)
+![image-20211028102438721](images/image-20211028102438721.png)
 
 ## 5. 垃圾回收器
 
@@ -130,7 +130,7 @@ soft方法：
 
 #### 5.1.1 参数
 
-![image-20211028144136430](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20211028144136430.png)
+![image-20211028144136430](images/image-20211028144136430.png)
 
 安全点：可能对象的地址被其它的线程改了，导致垃圾回收器来时找不到，就会出现问题。需要等用户线程到了安全点后，才会阻塞
 
@@ -158,7 +158,7 @@ MaxGCPauseMillis=ms：最大暂停毫秒数 跟 GCTimeRatio 冲突。
 
 #### 5.3.1 参数
 
-![image-20211028145224683](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/image-20211028145224683.png)
+![image-20211028145224683](images/image-20211028145224683.png)
 
 +UseConcMarkSweepGC ： 并发的标记清除算法的垃圾回收器。用户线程和垃圾回收器并发执行。只会再 初始标记、重新标记时会触发 STW
 

@@ -65,9 +65,9 @@ public class AutoSpiProcessor extends AbstractProcessor {
 
 创建一个模块B：引入上面的依赖A，创建一个标记注解
 
-![1656491294623](images/1656491294623.png)
+![1656491294623](../neo4j/images/1656491294623.png)
 
-![1656491229500](images/1656491229500.png)
+![1656491229500](../neo4j/images/1656491229500.png)
 
 
 
@@ -85,7 +85,7 @@ public class AutoSpiProcessor extends AbstractProcessor {
 
 **Element** 是一个接口，表示一个程序元素，它可以是包、类、方法或者一个变量。
 
-![1656554023300](images/1656554023300.png)
+![1656554023300](../neo4j/images/1656554023300.png)
 
 - PackageElement：表示一个程序包元素，提供对有关包及其成员信息的访问
 - ExecutableElement：表示某个类或者接口的方法、构造方法或初始化程序（静态或者实例），包括注释类型的元素

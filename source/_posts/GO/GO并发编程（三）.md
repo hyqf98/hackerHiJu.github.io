@@ -61,11 +61,11 @@ func main() {
 
 协程：双向流通
 
-![1653307794140](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1653307794140.png)
+![1653307794140](images/1653307794140.png)
 
 但go的程序启动时，一个线程里面可能有多个 **goroutine** 执行，具体在哪个线程执行，由调度器决定；传统意义上的 routine 需要显示的写出释放控制权，而 goroutine 不需要写出来，调度器会进行切换
 
-![1653307916177](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1653307916177.png)
+![1653307916177](images/1653307916177.png)
 
 ## 1.2 goroutine切换点
 
@@ -508,15 +508,15 @@ func (t TimeoutCreator) Create(ch <-chan any, V...any) (any, bool) {
 
 # 6. 广度优先算法（迷宫）
 
-![1653737226039](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1653737226039.png)
+![1653737226039](images/1653737226039.png)
 
 每次探索都是一层一层的向外进行探索，如果起始为0，那么先将周边的 1 进行探索完毕，探索1时会将1的点位先存入到队列中，等后续所有的1都探索完成之后，再取出1的点位进行1周边的探索
 
-![1653788764008](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1653788764008.png)
+![1653788764008](images/1653788764008.png)
 
 通过上面的这种点位算法，就可以将迷宫的路画出来
 
-![1653789013355](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1653789013355.png)
+![1653789013355](images/1653789013355.png)
 
 ## 6.1 代码实现
 
@@ -532,7 +532,7 @@ func (t TimeoutCreator) Create(ch <-chan any, V...any) (any, bool) {
 0 1 0 0 0
 ```
 
-![1653791010414](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1653791010414.png)
+![1653791010414](images/1653791010414.png)
 
 
 

@@ -1,0 +1,30 @@
+version: '3'
+services:
+  es1:
+    image: elasticsearch:latest
+    restart: always
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    privileged: true
+    volumes:
+      - "/usr/local/soft/es/data:/usr/share/elasticsearch/data" #数据路径
+      - "/usr/local/soft/es/conf:/usr/share/elasticsearch/config" #配置文件
+      - "/usr/local/soft/es/plugin:/usr/share/elasticsearch/plugins" #插件
+    environment:
+      ES_JAVA_OPTS: -Xms256m -Xmx256m
+    networks:
+      - nginx_network
+
+  kibana:
+    image: kibana:7.14.0
+    ports:
+      - "5601:5601"
+    networks:
+      - nginx_network
+    volumes:
+      - "/usr/local/soft/es/kibana/conf/kibana.yml:/usr/share/kibana/config/kibana.yml"
+
+networks:
+  nginx_network:
+    external: true

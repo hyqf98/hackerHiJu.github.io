@@ -17,12 +17,12 @@ published: false
 
 ## 1. 色彩原理
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744288515182.png)
+![|500](images/色彩原理（一）-1744288515182.png)
 
 ### 1.1 色相、饱和度、明度
 
 - 色相：颜色的相貌，颜色的名字
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744288573473.png)
+![|500](images/色彩原理（一）-1744288573473.png)
 
 - 饱和度：颜色的鲜艳程度
 - 明度：颜色的明暗
@@ -36,7 +36,7 @@ published: false
 ### 1.2 色温和色调
 色温是由蓝色和黄色进行控制，色调是由绿色和洋红进行控制。需要通过互补色进行配合使用
 
-![image.png|500x379](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/20250409204050988.png)
+![image.png|500x379](images/20250409204050988.png)
 
 | 名称（CMY色料三原色） |    组成色     |
 | :----------: | :--------: |
@@ -46,7 +46,7 @@ published: false
 |      黑色      | 青 + 洋红 + 黄 |
 
 
-![image.png](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/20250409204003407.png)
+![image.png](images/20250409204003407.png)
 
 | 名称（RGB色光三原色） |    组成色    |
 | :----------: | :-------: |
@@ -60,7 +60,7 @@ published: false
 ### 1.3 互补色
 两种颜色在色环上180°相对，类似两个极端，为补色相互调和会使色彩纯度降低，变成灰色
 
-![image.png](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/20250409204857612.png)
+![image.png](images/20250409204857612.png)
 
 
 #### RGB颜色转换
@@ -69,47 +69,47 @@ published: false
 - 组合：蓝 + 绿
 - 转换公式：主要目的是减蓝色，那么可以加互补色黄色
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744206718189.png)
+![|500](images/色彩原理（一）-1744206718189.png)
 
 ###### 2. 青转蓝
 - 组合：蓝 + 绿
 - 转换公式：主要目的是减去绿，那么增加绿色互补色洋红
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744206870928.png)
+![|500](images/色彩原理（一）-1744206870928.png)
 ###### 3. 黄转绿
 - 组合：红 + 绿
 - 转换公式：减去红色，增加互补色青色
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744206968124.png)
+![|500](images/色彩原理（一）-1744206968124.png)
 
 ###### 4. 黄转红
 - 组合：红 + 绿
 - 转换公式：减去绿色，增加互补色品红
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744207093472.png)
+![|500](images/色彩原理（一）-1744207093472.png)
 
 ##### 5. 品红转蓝
 - 组合：红 + 蓝
 - 转换公式：减去红色，增加红色互补色青色
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744207185402.png)
+![|500](images/色彩原理（一）-1744207185402.png)
 
 ##### 6. 青转黄
 - 转换公式：先将青色转换为绿色（减去蓝色，增加蓝色互补色黄色），在将绿色转换为黄色（加上红色，减去红色的互补色青色）
 
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744207882603.png)
+![|500](images/色彩原理（一）-1744207882603.png)
 
 ##### 7. 黄转青
 - 转换公式：将黄色转化为绿色（减去红色，增加红色互补色青色），在将绿色转换为黄色（加上蓝色，减去蓝色的互补色黄色）
 
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744208186535.png)
+![|500](images/色彩原理（一）-1744208186535.png)
 
 ##### 8. 品红转黄
 - 转换公式：将品红转换红色（减去蓝色，增加蓝色互补色黄色），将红色转换为黄色（增加绿色，减去绿色互补色品红）
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744208301273.png)
+![|500](images/色彩原理（一）-1744208301273.png)
 
 #### CMYK颜色转换
 
@@ -119,22 +119,22 @@ PS中使用正片叠底
 - 组合：青 + 黄
 - 转换公式：减去青色
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744289882251.png)
+![|500](images/色彩原理（一）-1744289882251.png)
 
 ##### 2. 黄转蓝
 - 组合：蓝 = 品红 + 青
 - 转换公式：减去黄色，加上品红和青色
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744290644562.png)
+![|500](images/色彩原理（一）-1744290644562.png)
 ##### 3. 青转红
 - 转换公式：先减去青色，在加上品红和黄色
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744290844391.png)
+![|500](images/色彩原理（一）-1744290844391.png)
 
 ##### 4. 品红转绿
 - 转换公式：先减去品红，在加上青色和黄色
 
-![|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E8%89%B2%E5%BD%A9%E5%8E%9F%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89-1744290949386.png)
+![|500](images/色彩原理（一）-1744290949386.png)
 ## 2. LightRoom
 
 ### 2.1 基础面板
@@ -174,7 +174,7 @@ PS中使用正片叠底
 显示一张图的色彩分布情况
 
 
-![直方图|500](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/%E7%9B%B4%E6%96%B9%E5%9B%BE.svg)
+![直方图|500](images/直方图.svg)
 
 
 

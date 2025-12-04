@@ -685,7 +685,7 @@ func extending() {
 
 
 
-![1652603028474](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1652603028474.png)
+![1652603028474](images/1652603028474.png)
 
 实现：
 
@@ -695,7 +695,7 @@ func extending() {
 
 **注意Slice只能向后扩展，不能向前**
 
-![1652603252696](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1652603252696.png)
+![1652603252696](images/1652603252696.png)
 
 ## 8.3 切片添加
 
@@ -947,7 +947,7 @@ func (node *treeNode) setValueForPointer(value int)  {
 - 首字母大写：public
 - 首字母小写：private
 
-![1652702990978](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1652702990978.png)
+![1652702990978](images/1652702990978.png)
 
 entry
 
@@ -1523,13 +1523,13 @@ func TestAdd(t *testing.T) {
 
 idea还提供了当前测试的代码覆盖率以及性能问题，**测试是 Test 名称开头**
 
-![1653209264116](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1653209264116.png)
+![1653209264116](images/1653209264116.png)
 
-![1653209290290](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1653209290290.png)
+![1653209290290](images/1653209290290.png)
 
 红色部分就是没有覆盖到的测试代码，绿色的就代表覆盖到了
 
-![1653209327978](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1653209327978.png)
+![1653209327978](images/1653209327978.png)
 
 #### 性能测试
 
@@ -1558,7 +1558,7 @@ func BenchmarkAdd(b *testing.B) {
 }
 ```
 
-![1653210034559](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1653210034559.png)
+![1653210034559](images/1653210034559.png)
 
 - go test -bean .  -cpuprofile: 获取性能数据
 - go tool pprof：查看二进制的性能日志
@@ -1602,5 +1602,5 @@ func ExampleQueue_Pop() {
 
 以下就是页面的实例代码
 
-![1653215563421](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1653215563421.png)
+![1653215563421](images/1653215563421.png)
 

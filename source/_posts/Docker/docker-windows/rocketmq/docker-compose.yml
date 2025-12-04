@@ -1,0 +1,53 @@
+version: '3'
+services:
+  mqnamesrv:
+#    image: foxiswho/rocketmq:4.8.0
+    build:
+      context: .
+      dockerfile: Dockerfile-rocketmq  #自定义镜像文件的构建，原文件中文乱码
+    restart: on-failure
+    container_name: mqnamesrv
+    ports:
+       - "9876:9876"
+    networks:
+      - nginx_network
+#    volumes:
+#      - "/usr/local/soft/rocketmq/mqsrv/logs:/home/rocketmq/logs"   #namesrv的日志路径，需要设置权限为777
+    environment:
+      JAVA_OPT: -server -Xms256m -Xmx256m
+    command: sh mqnamesrv
+  mqbroker:
+#    image: foxiswho/rocketmq:4.8.0
+    build:
+      context: .
+      dockerfile: Dockerfile-rocketmq
+    restart: on-failure
+    container_name: mqbroker
+    ports:
+      - "10911:10911"
+      - "10909:10909"
+    volumes: #目前使用只用于测试，不需要映射数据目录
+      - "/usr/local/soft/rocketmq/mq/conf:/home/rocketmq/conf"
+      - "/usr/local/soft/rocketmq/mq/logs:/home/rocketmq/logs"  #日志映射需要设置为777
+#      - "/usr/local/soft/rocketmq/mq/store:/home/rocketmq/store" #数据存储路径
+    networks:
+      - nginx_network
+    environment:
+      NAMESRV_ADDR: "mqnamesrv:9876"
+      JAVA_OPT_EXT: -Xms256m -Xmx256m -Xmn128m
+      JAVA_HOME: /usr/lib/jvm/jre-1.8.0-openjdk-1.8.0.275.b01-0.el7_9.x86_64  #配置java_home路径到环境变量中，否者执行 mqadmin工具台命令会报错
+      JRE_HOME: ${JAVA_HOME}/jre
+    command: sh mqbroker -c /home/rocketmq/conf/broker.conf
+  mqconsole: #启动控制台
+    image: styletang/rocketmq-console-ng
+    container_name: rocketmq-console
+    ports:
+      - "19876:8080"
+    environment:
+      JAVA_OPTS: -Drocketmq.namesrv.addr=mqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=falses
+    networks:
+      - nginx_network
+# 需要提前创建好网络，将服务加入到nginx网络中，便于nginx做转发
+networks:
+  nginx_network:
+    external: true

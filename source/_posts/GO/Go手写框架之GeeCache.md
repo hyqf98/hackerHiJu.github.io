@@ -39,7 +39,7 @@ published: true
 
 ## 2. LRU算法实现
 
- ![implement lru algorithm with golang](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/lru.jpg) 
+ ![implement lru algorithm with golang](images/lru.jpg) 
 
 - 绿色是字典（map），存储键和值的映射关系。这样根据某个键查找相对于的值的复杂度是 `0(1)` ，在字典中插入数据的复杂度也是 `0(1)`
 - 红色是双向链表实现的队列，将所有的值放入到双向链表中，这样当访问到某个具体值时，将其移动到队尾的复杂度是 `0(1)`
@@ -316,7 +316,7 @@ func (c *cache) get(key string) (value ByteView, ok bool) {
 
 - **Group** ： 主要用于与外部的交互，通过 **组** 来进行控制整个缓存的存储与取值的流程，每个 **组** 也有自己的名称
 
-![1665211710943](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1665211710943.png)
+![1665211710943](images/1665211710943.png)
 
 ```go
 import (

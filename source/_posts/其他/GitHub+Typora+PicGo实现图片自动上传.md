@@ -21,11 +21,11 @@ thumbnail: "https://images.unsplash.com/photo-1505322022379-7c3353ee6291?crop=en
 
 打开 **settings --> Developer settings --> personal access tokens** 创建一个私有密钥，权限只需要勾选 **repo** 即可，不要设置过期时间，**只会显示一次记得记住**
 
-![](https://cdn.jsdelivr.net/gh/haijun823/note-picture@main/note-picture/image-20230329155043676.png)
+![](images/image-20230329155043676.png)
 
-![image-20230329155043676](https://cdn.jsdelivr.net/gh/haijun823/note-picture@main/note-picture/image-20230329154757313.png)
+![image-20230329155043676](images/image-20230329154757313.png)
 
-![image-20230801140804692](https://cdn.jsdelivr.net/gh/haijun823/note-picture@main/note-picture/image-20230801140804692.png)
+![image-20230801140804692](images/image-20230801140804692.png)
 
 # 2. 安装PicGo
 
@@ -39,7 +39,7 @@ thumbnail: "https://images.unsplash.com/photo-1505322022379-7c3353ee6291?crop=en
 - 存储路径：定义好需要上传的图片路径，保存的文件夹
 - 自定义域名：配置CDN加速，如果是默认的路径 **https://raw.githubusercontent.com/[username\]/[仓库名]** 获取图片会非常的慢，通过指定的CDN域名拉取就会很快，这里用jsdeliver **https://cdn.jsdelivr.net/gh/[github用户名]/[仓库名]@main**，注意这里需要 @main 代表上传到main分支，默认是master
 
-![image-20230329155905763](https://cdn.jsdelivr.net/gh/a1424132610/note-picture@main/note-picture/image-20230329155905763.png)
+![image-20230329155905763](images/image-20230329155905763.png)
 
 # 3. 配置typora
 
@@ -47,13 +47,13 @@ thumbnail: "https://images.unsplash.com/photo-1505322022379-7c3353ee6291?crop=en
 
 直接使用 **PicGo（app）** 的方式需要下载软件进行安装，比较简单，但是运行一个软件会比较占用资源
 
-![image-20230329160414727](https://cdn.jsdelivr.net/gh/haijun823/note-picture@main/note-picture/image-20230329162144750.png)
+![image-20230329160414727](images/image-20230329162144750.png)
 
 ## 3.2 PicGo（command）
 
 直接下载即可，保存的路径是 **C:\Users\用户\AppData\Roaming\Typora\picgo\win64** 下载的是 **picgo.exe** 文件
 
-![image-20230329162144750](https://cdn.jsdelivr.net/gh/haijun823/note-picture@main/note-picture/image-20230329160414727.png)
+![image-20230329162144750](images/image-20230329160414727.png)
 
 
 
@@ -80,4 +80,4 @@ thumbnail: "https://images.unsplash.com/photo-1505322022379-7c3353ee6291?crop=en
 }
 ```
 
-![image-20230329162546328](https://cdn.jsdelivr.net/gh/a1424132610/note-picture@main/note-picture/image-20230329162546328.png)
+![image-20230329162546328](images/image-20230329162546328.png)

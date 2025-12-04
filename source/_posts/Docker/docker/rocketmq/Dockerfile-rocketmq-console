@@ -1,0 +1,7 @@
+FROM styletang/rocketmq-console-ng
+RUN yum install kde-l10n-Chinese -y && yum install glibc-common -y
+RUN localedef -c -f UTF-8 -i zh_CN zh_CN.utf-8
+RUN export LANG=zh_CN.UTF-8
+RUN echo "export LANG=zh_CN.UTF-8" >> /etc/locale.conf
+COPY ./broker.conf /home/rocketmq/conf/
+ENV LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8

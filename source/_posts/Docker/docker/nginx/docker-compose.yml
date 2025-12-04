@@ -1,0 +1,28 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest  #部署ngin
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - /usr/local/soft/nginx/nginx.conf:/etc/nginx/nginx.conf  #指定配置文件
+      - /usr/local/soft/nginx/log:/var/log/nginx
+      - /usr/local/soft/nginx/html:/usr/share/nginx/html
+    restart: always
+    networks:
+      - nginx_network
+  #注意启动时如果不是docker账户启动可能没有访问docker.sock的权限
+  portainer:
+    image: portainer/portainer:latest
+    container_name: portainer
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - nginx_network
+# 需要提前创建好网络
+networks:
+  nginx_network:
+    external: true

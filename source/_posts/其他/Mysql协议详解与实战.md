@@ -17,7 +17,7 @@ published: true
 
 业务开发中经常需要根据一些数据变更实现相对应的操作。例如，用户登录P站，购买了一件商品，这时候需要去加积分，积分加完通知钱包扣款，扣款完成后通知短信服务发送短信给用户表示成功（后续的业务可能会进行用户的数据统计等等），如果这时候公司老板需要统计用户的消费信息，月度积分积累，以及用户年月日的消费情况，这时候怎么办？
 
-![业务场景](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF.png)
+![业务场景](images/业务场景.png)
 
 
 
@@ -28,13 +28,13 @@ published: true
 
 第一种方案直接通过业务系统进行调用，每个业务系统都通过接口进行调用统计中心，将自身的业务数据发送给统计服务，这种方案直接跟业务系统耦合了，而且随着产品的增长，代码量会越来越多，后续人员的维护会非常困难
 
-![业务系统调用](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/%E4%B8%9A%E5%8A%A1%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8.png)
+![业务系统调用](images/业务系统调用.png)
 
 ## 2.2 canal
 
- ![img](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/20191104101735947.png) 
+ ![img](images/20191104101735947.png) 
 
-![业务系统调用2](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/%E4%B8%9A%E5%8A%A1%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A82.png)
+![业务系统调用2](images/业务系统调用2.png)
 
 ### 2.2.1 简介
 
@@ -104,7 +104,7 @@ github上面提供的一个开源mysql协议slave封装库，主要用于发起s
 
 客户端和服务端以最大 16MByte 大小的数据包进行交换，下面是数据包头的结构：
 
-![1659585504785](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1659585504785.png)
+![1659585504785](images/1659585504785.png)
 
 COM_QUIT 断开连接包例子：
 
@@ -239,7 +239,7 @@ https://dev.mysql.com/doc/internals/en/capability-flags.html#packet-Protocol::Ca
 
 下面是创建mysql连接时，服务端返回的初始数据包
 
-![1659929978515](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1659929978515.png)
+![1659929978515](images/1659929978515.png)
 
 ##### SSLRequest
 
@@ -377,7 +377,7 @@ string[EOF]    执行的sql语句
 - LOCAL_INFILE_Reuqest
 - Resultset
 
- ![Image description follows.](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/graphviz-3ab2ba81081a7f3cc556d11fd09f50341bba6f15.png) 
+ ![Image description follows.](images/graphviz-3ab2ba81081a7f3cc556d11fd09f50341bba6f15.png) 
 
 当发起一个查询请求时，会先返回一个 **int<lenenc\>** 类型的整数，表示结果集的数量
 
@@ -508,9 +508,9 @@ string[len]    数据
 
 
 
-![1660013429278](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1660013429278.png)
+![1660013429278](images/1660013429278.png)
 
- ![img](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/0979109fbea2fed9ea3b5a0c90cf53e7.png) 
+ ![img](images/0979109fbea2fed9ea3b5a0c90cf53e7.png) 
 
 ##### QUERY_TYPE_EVENT
 
@@ -1991,5 +1991,5 @@ public class CommonEventListener extends AbstractApplicationEventListener {
 
 #### 3.8.4 代码结构
 
-![1660116352152](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/1660116352152.png)
+![1660116352152](images/1660116352152.png)
 

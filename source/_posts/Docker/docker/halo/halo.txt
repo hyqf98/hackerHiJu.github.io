@@ -1,0 +1,14 @@
+docker run \
+  -it -d \
+  --name halo \
+  -p 80:8090 \
+  -v ~/.halo2:/root/.halo2 \
+  halohub/halo:2.10 \
+  --halo.external-url=http://zhonghaijun.top:80/ \
+  --halo.security.initializer.superadminusername=admin \
+  --halo.security.initializer.superadminpassword=zhonghaijun
+
+账号
+zhonghaijun
+密码
+zhonghaijun

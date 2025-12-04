@@ -237,7 +237,7 @@ public void test_order() {
 
 这里进行sql路由的时候会直接根据上面的配置通过 **table-strategy** 、**database-strategy** 配置的策略通过 **order_id ** 进行取模然后确定数据库和数据表
 
-![image-20230512171159439](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20230512171159439.png)
+![image-20230512171159439](images/image-20230512171159439.png)
 
 ### 3.2 绑定表
 
@@ -332,11 +332,11 @@ create table test2.t_user_info_2 (
 
 下面是没有配置绑定表时进行分页查询，可以看到查询时出现了笛卡尔积的问题，每个数据源都出现了无效的查询sql
 
-![image-20230515101315471](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20230515101315471.png)
+![image-20230515101315471](images/image-20230515101315471.png)
 
 下面是配置了绑定表后的解析sql
 
-![image-20230515101657558](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20230515101657558.png)
+![image-20230515101657558](images/image-20230515101657558.png)
 
 Sharding-JDBC在进行分库分表后，每个分片只会存储  **部分数据**，因此在进行查询时需要同时查询多个分片，然后将结果进行合并。在没有使用绑定表的情况下，如果查询的两个表在不同的分片中，就会出现笛卡尔积的情况，因为没有对这两个表进行关联，导致每个分片都会返回所有符合条件的结果。而使用绑定表，因为绑定表会将不同分片中的表进行关联，使得查询时只需要查询相关的分片，避免了笛卡尔积的产生。
 

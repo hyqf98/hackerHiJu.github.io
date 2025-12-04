@@ -51,7 +51,7 @@ Inject标签可以配置一个动态的数据触发入口，当直接点击节�
   - 指定时间段周期性执行：在指定周一到周天在几点到几点之间每隔多少分钟执行
   - 指定时间：指定时间点执行
 
-![image-20241220180628419|1570x1046](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241220180628419.png)
+![image-20241220180628419|1570x1046](images/image-20241220180628419.png)
 
 #### 2. debug
 
@@ -61,47 +61,47 @@ debug节点用于输出数据到控制台或者日志中
 - 与表达式输出相同：会输出整个传入的状态信息，其中包括正常的数据、异常的信息等
 - JSONata表达式：输入表达式进行处理
 
-![image-20241220181302178](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241220181302178.png)
+![image-20241220181302178](images/image-20241220181302178.png)
 
 填写表达式
 
-![image-20241224112928351](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241224112928351.png)
+![image-20241224112928351](images/image-20241224112928351.png)
 
 
 
 当创建一个 **inject** 后进行触发，并且打印对应的数据日志到控制台
 
-![image-20241220181334463](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241220181334463.png)
+![image-20241220181334463](images/image-20241220181334463.png)
 
-![image-20241220184510490](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241220184510490.png)
+![image-20241220184510490](images/image-20241220184510490.png)
 
 #### 3. complete
 
 complete节点用于监听对应节点的完成，当一个节点完成后会触发执行
 
-![image-20241224111057435](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241224111057435.png)
+![image-20241224111057435](images/image-20241224111057435.png)
 
 通过节点进行关联需要监听哪一个，监听多个时每一个都会执行一次
 
-![image-20241224111126171](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241224111126171.png)
+![image-20241224111126171](images/image-20241224111126171.png)
 
 #### 4. catch
 
 捕获节点执行异常时进行执行对应的流程
 
-![image-20241224111639305](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241224111639305.png)
+![image-20241224111639305](images/image-20241224111639305.png)
 
 - 所有节点：当前流程页中所有节点执行失败了都会进行触发
 - 在同一个分组：在当前分组中的节点抛出异常进行触发
 - 指定节点：选中多个节点进行触发
 
-![image-20241224112246259](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241224112246259.png)
+![image-20241224112246259](images/image-20241224112246259.png)
 
 #### 5. status
 
 用于监听某个节点的状态值变更信息，例如：tcp的连接、mqtt客户端的连接等，都会输出对应的状态信息
 
-![image-20241224175133998](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241224175133998.png)
+![image-20241224175133998](images/image-20241224175133998.png)
 
 #### 6. link in/link out/link call
 
@@ -112,15 +112,15 @@ complete节点用于监听对应节点的完成，当一个节点完成后会触
 
 
 
-![image-20241224175538380](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241224175538380.png)
+![image-20241224175538380](images/image-20241224175538380.png)
 
-![image-20241224175557598](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241224175557598.png)
+![image-20241224175557598](images/image-20241224175557598.png)
 
 调用子流程并且获取到对应的返回值，例如下面的流程，我输入8888数据，通过**link call** 去调用上面的子流程，子流程调用了一个function2并且将8888修改为999，这时候流程就会打印999数据，如果子流程不将 **link out** 修改为返回调用链接节点，那么就接不到返回值
 
-![image-20241225161449372](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241225161449372.png)
+![image-20241225161449372](images/image-20241225161449372.png)
 
-![image-20241225161433700](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241225161433700.png)
+![image-20241225161433700](images/image-20241225161433700.png)
 
 #### 5. comment
 
@@ -145,7 +145,7 @@ switch case，匹配对应数据执行对应节点
 - 全选所有规则：所有规则都会进行匹配，匹配到了就执行
 - 接收匹配到第一条信息后停止：只会匹配成功一次
 
-![image-20241225163640846](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241225163640846.png)
+![image-20241225163640846](images/image-20241225163640846.png)
 
 #### 3. change
 
@@ -158,7 +158,7 @@ switch case，匹配对应数据执行对应节点
 
 将type字段中为数据2的数据替换为123456
 
-![image-20241225164417913](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241225164417913.png)
+![image-20241225164417913](images/image-20241225164417913.png)
 
 #### 4. range
 
@@ -169,17 +169,17 @@ msg.payload = Math.random()
 return msg;
 ```
 
-![image-20241225165051238](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241225165051238.png)
+![image-20241225165051238](images/image-20241225165051238.png)
 
-![image-20241225165138666](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241225165138666.png)
+![image-20241225165138666](images/image-20241225165138666.png)
 
 #### 5. template
 
 创建模板数据，根据 **mustache** 语法来指定转换为对应的格式
 
-![image-20241225165434076](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241225165434076.png)
+![image-20241225165434076](images/image-20241225165434076.png)
 
-![image-20241225165539007](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241225165539007.png)
+![image-20241225165539007](images/image-20241225165539007.png)
 
 #### 6. delay
 
@@ -196,7 +196,7 @@ return msg;
     - 不传输中间消息：只发送第一次的消息
     - 在第2个输出端发送中间消息：第一个消息发送第一个连接端口，后续的消息都发送到第二个
 
-![image-20241225170605389](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20241225170605389.png)
+![image-20241225170605389](images/image-20241225170605389.png)
 
 #### 7. trigger
 
@@ -218,27 +218,27 @@ return msg;
 
 创建mqtt客户端，去监听对应的topic信息
 
-![image-20250117104803713](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20250117104803713.png)
+![image-20250117104803713](images/image-20250117104803713.png)
 
 #### 2. mqtt out
 
 输出数据到对应的topic中
 
-![image-20250117104839224](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20250117104839224.png)
+![image-20250117104839224](images/image-20250117104839224.png)
 
 #### 3. http in
 
 创建一个http的请求接口，请求的路径是 服务部署的路径+端口/hello，例如：127.0.0.1:1880/echo
 
-![image-20250117105414263](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20250117105414263.png)
+![image-20250117105414263](images/image-20250117105414263.png)
 
 #### 4. http response
 
 创建一个响应返回给 http in作为响应对象
 
-![image-20250117105614886](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20250117105614886.png)
+![image-20250117105614886](images/image-20250117105614886.png)
 
-![image-20250117111239544](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20250117111239544.png)
+![image-20250117111239544](images/image-20250117111239544.png)
 
 需要注意的是，响应的数据必须要返回系统的 **msg** 对象才有效
 
@@ -246,9 +246,9 @@ return msg;
 
 发起自定义的http请求，直接请求上面定义的接口数据
 
-![image-20250117111438516](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20250117111438516.png)
+![image-20250117111438516](images/image-20250117111438516.png)
 
-![image-20250117111425808](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20250117111425808.png)
+![image-20250117111425808](images/image-20250117111425808.png)
 
 #### 6. websocket in
 
@@ -275,9 +275,9 @@ return msg;
 - 发送信息：当节点合并到指定数量的数据后发送给下一个节点
 - 和每个后续消息：节点会合并上所有的数据的数据进行发送，每收到一次就发送一次
 
-![image-20250117141311846](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20250117141311846.png)
+![image-20250117141311846](images/image-20250117141311846.png)
 
-![image-20250117141251735](https://cdn.jsdelivr.net/gh/hackerhaiJu/note-picture@main/note-picture/image-20250117141251735.png)
+![image-20250117141251735](images/image-20250117141251735.png)
 
 #### 3. json转换
 

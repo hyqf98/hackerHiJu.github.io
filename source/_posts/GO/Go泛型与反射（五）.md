@@ -39,7 +39,7 @@ func SumFloats(m map[string]float64) float64 {
 
 如果使用泛型的话只需要定义泛型方法即可（如果报一下编译错误的话，是idea版本过低，升级版本即可，但是运行没有问题）
 
-![1653654343704](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1653654343704.png)
+![1653654343704](images/1653654343704.png)
 
 ```go
 func main() {
@@ -210,7 +210,7 @@ func stringReflect() {
 }
 ```
 
-![1654758437844](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1654758437844.png)
+![1654758437844](images/1654758437844.png)
 
 ```go
 type Name struct {

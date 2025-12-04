@@ -368,13 +368,13 @@ func main() {
 
 ### 1.4 路由树
 
-![1655715867529](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1655715867529.png)
+![1655715867529](images/1655715867529.png)
 
 所实现的功能，如果访问路径 **/hello/zhangsan，后端匹配路径 **/hello/:name** 那么这个 **:name** 的值就需要替换成前端访问的 **path** 这个值，跟 java中 Restful接口风格一样，使用 **{variable}** 标记需要取的参数，在接口使用 **@PathVariable** 注解就可以取值；如果页面访问 **/static/path/img** 这个路径，后端使用 **/static/\*filepath** 进行匹配的话，那么我们就需要把 **filepath** 的值设置为 **/path/img** 作为参数让后续进行取值；
 
 上面图片中实现这种方式采用的 **前缀树** 进行递归匹配，**"/"** 作为根路径进行匹配；例如：**/hello/:name** 进行路径匹配，那么进行添加出来的结构就是下图这样
 
-![1655716626438](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1655716626438.png)
+![1655716626438](images/1655716626438.png)
 
 查询对应的节点就只需要获取到顶级的节点进行递归遍历就可以了，具体看代码实现
 
@@ -583,7 +583,7 @@ func (r *Router) handle(s *Session) {
 
 上述通过 **trie.go** 中的 **search()** 方法，先将访问的 **path** 路径进行分割，然后遍历子节点进行一部分一部分的匹配
 
-![1655717950409](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1655717950409.png)
+![1655717950409](images/1655717950409.png)
 
 ### 1.5 分组
 
@@ -730,7 +730,7 @@ func main() {
 
 执行顺序，先执行 logger2 的打印，然后执行对应的路径处理逻辑，然后打印 logger2 后续的打印，然后执行 logger 的打印逻辑
 
-![1655886960086](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1655886960086.png)
+![1655886960086](images/1655886960086.png)
 
 **logger.go** ：创建两个中间件日志打印
 
@@ -799,13 +799,13 @@ func (r *Router) handle(s *Session) {
 }
 ```
 
-![1655886464915](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1655886464915.png)
+![1655886464915](images/1655886464915.png)
 
 ### 1.7 静态模板 Template
 
 主要目的是能够实现前端请求获取 **css/js** 文件，并且通过 **Template** 模板语法对 **html** 文件的动态加载；例如：前端请求 **/assets/*filepath** 可以匹配 **/assets** 开头的所有的地址（**assets/js/geektutu.js**） 而 **filepath** 也会被映射成为对应的参数，这里跟上面路径匹配一样；下面是具体实现：
 
-![1656321827883](https://cdn.jsdelivr.net/gh/hackerHiJu/note-picture@main/note-picture/1656321827883.png)
+![1656321827883](images/1656321827883.png)
 
 ```go
 func main() {
