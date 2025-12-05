@@ -525,7 +525,7 @@ const add = () => {
 
 ## 11、生命周期
 
-![img](https://staging-cn.vuejs.org/assets/lifecycle.16e4c08e.png)
+![img|500x1112](https://staging-cn.vuejs.org/assets/lifecycle.16e4c08e.png)
 
 ## 12、侦听器
 
@@ -601,7 +601,7 @@ const add = () => {
 
 组件允许我们将 UI 划分为独立的、可重用的部分来思考。组件在应用程序中常常被组织成层层嵌套的树状结构：
 
-![img](https://staging-cn.vuejs.org/assets/components.7fbb3771.png)
+![img|500x24](https://staging-cn.vuejs.org/assets/components.7fbb3771.png)
 
 这和我们嵌套 HTML 元素的方式类似，Vue 实现了自己的组件数据模型，使我们可以在每个组件内封装自定义内容与逻辑。Vue 同样也能很好地配合原生 Web Component。
 
